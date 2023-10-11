@@ -12,8 +12,11 @@ export class StarMap{
      * Gather solution map data from API
      */
     async fillMapData(){
+        console.log("Calling API to download map data")
+
         await axios.get(`${endpoint}/map/${this.candidateId}/goal`).then(e => {
             this.map = e.data.goal
+            console.log('Download: Data map COMPLETE!')
         })
     }
 
@@ -35,15 +38,18 @@ export class StarMap{
      * @param planet 
      */
     async placePlanet(planet: Planet){
-        console.log(planet)
+        console.log(`Placing: ${planet}`)
         await axios.post(`${endpoint}/${planet.constructor.name.toLowerCase()}`,{
             ...planet,
             candidateId: this.candidateId,
         },{headers: {"Content-Type":"application/json"}})
     }
 
-    /**Clean every planet in the map (It takes a long time) */
+    /**
+     * Clean every planet in the map (It takes a long time) 
+     */
     async cleanMap(){
+        console.log("Cleaning space dust...")
         for (let i = 0; i < this.map.length; i++) {
             for (let j = 0; j < this.map[i].length; j++) {
                 this.deletePlanet(i,j).then(await this.wait(2000))
@@ -51,8 +57,8 @@ export class StarMap{
         }
     }
 
-    /**Delete a single planet from map
-     * 
+    /**
+     * Delete a single planet from map
      */
     async deletePlanet(row: number, column: number){
         return await axios.delete(
