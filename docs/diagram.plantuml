@@ -1,0 +1,35 @@
+@startuml
+
+    abstract class Planet{
+        -row: int
+        -column: int
+
+        #Planet(row, column)
+    }
+
+    class Polyantes extends Planet{
+        
+        Polyantes(row, column)
+    }
+
+    class Soloons extends Planet{
+        color: string
+
+        Soloons(row, column, color)
+    }
+
+    class Cometh extends Planet{
+        direction: string
+
+        Cometh(row, column, direction)
+    }
+
+    class StarMap{
+        planets: List<Planet>
+
+
+        placePlanet(planet)
+        removePlanet(planet)
+    }
+
+@enduml
